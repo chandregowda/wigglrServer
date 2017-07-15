@@ -37,3 +37,48 @@ exports.list = (req, res) => {
 	 });
     
 }
+const db = require("../../config/db");
+const User = require('./users.model').User;
+const UserTemplates = require('./user-template.model').UserTemplates;
+
+exports.getUserDetails = function (req, res) {
+    var filter = {};
+    let userId = req.query.userId;
+    if (userId) {
+        filter.userId = parseInt(userId) || 0;
+    }
+
+    User.get(filter, (details) => {
+        console.log("Users:", JSON.stringify(details, undefined, 2));
+        if (!details.error) {
+            res.json(details);
+        } else {
+            res.json({
+                "ERROR": details.error
+            });
+        }
+    });
+}
+
+exports.getUserTemplateDetails = function (req, res) {
+    var filter = {};
+    let userId = req.query.userId;
+    if (userId) {
+        filter.userId = parseInt(userId) || 0;
+    }
+    let templateId = req.query.templateId;
+    if (templateId) {
+        filter.templateId = parseInt(templateId) || 0;
+    }
+
+    UserTemplates.get(filter, (details) => {
+        console.log("UserTemplate:", JSON.stringify(details, undefined, 2));
+        if (!details.error) {
+            res.json(details);
+        } else {
+            res.json({
+                "ERROR": details.error
+            });
+        }
+    });
+}
