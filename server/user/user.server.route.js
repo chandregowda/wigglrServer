@@ -1,5 +1,6 @@
 var Users = require('./user.server.controller');
 module.exports = function(router) {
 
-    router.get('/list', Users.list);
+    router.post('/upload', Users.upload);
+    router.post('/list', Users.list);
 };
